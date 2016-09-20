@@ -28,6 +28,7 @@ There are two ways through which we can JNDI lookup and wire it to the Controlle
 My spring bean configuration file looks like below.
 ------------------
 
+```
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/mvc"
 	xmlns:jee="http://www.springframework.org/schema/jee"
@@ -69,7 +70,7 @@ My spring bean configuration file looks like below.
     	<beans:property name="jndiName" value="java:comp/env/jdbc/TestDB"/>
 	</beans:bean>
 </beans:beans>
-
+```
 
 Tomcat DataSource JNDI Configuration
 ------------------------------------------
@@ -77,6 +78,7 @@ Now that we are done with our project, the final part is to do the JNDI configur
 
 Add below configuration in the GlobalNamingResources section of the server.xml file og tomcat.
 
+```
 <Resource name="jdbc/TestDB" 
       global="jdbc/TestDB" 
       auth="Container" 
@@ -89,16 +91,16 @@ Add below configuration in the GlobalNamingResources section of the server.xml f
       maxIdle="20" 
       minIdle="5" 
       maxWait="10000"/>
-      
+```      
 
 
 We also need to create the Resource Link to use the JNDI configuration in our application, best way to add it in the server context.xml file of tomcat.
-
+```
 <ResourceLink name="jdbc/MyLocalDB"
                 	global="jdbc/TestDB"
                     auth="Container"
                     type="javax.sql.DataSource" />
-
+```
 
 Notice that ResourceLink name should be matching with the JNDI context name we are using in our application. Also make sure MySQL jar is present in the tomcat lib directory, otherwise tomcat will not be able to create the MySQL database connection pool.
 
@@ -106,4 +108,8 @@ Running the Spring DataSource JNDI Sample Project
 
 Our project and server configuration is done and we are ready to test it. Export the project as WAR file and place it in the tomcat deployment directory.
 
+How to run the code ?
+-------------------------
+```
 http://localhost:8080/SpringDataSource/rest/emps
+```
